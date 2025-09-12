@@ -1,0 +1,66 @@
+{
+  "personal_info": {
+    "name": "梁儀嫻 Zoey Liang",
+    "title": "自動化測試工程師\n Automation Test Engineer",
+    "avatar": "./images/avatar.jpg",
+    "location": "台北，台灣",
+    "experience": "5年+ 工作經驗",
+    "email": "mianmian0202@email.com"
+  },
+  "social_links": {
+    "github": "https://github.com/zoeyliang1227",
+    "linkedin": "https://www.linkedin.com/in/zoey-liang-5a2226172/"
+  },
+  "skills": {
+    "backend": [
+      "Python"
+    ],
+    "design": [
+    ],
+    "tools": [
+      "Git",
+      "Selenium",
+      "Playwright",
+      "Robot Framework"
+    ]
+  },
+  "portfolio": [
+    {
+      "id": 1,
+      "title": "InstaScraper",
+      "description": "Build a bot to fetch data from Instagram automatically",
+      "detailed_description": "建立一個機器人來自動從 Instagram 獲取數據",
+      "image": "./images/project1.jpg",
+      "demo_url": "https://demo-ecommerce.com",
+      "github_url": "https://github.com/zoeyliang1227/InstaScraper",
+      "technologies": [
+        "Python",
+        "playwright"
+      ],
+      "category": "Automation Scripts",
+      "date": "2025-09"
+    }
+  ],
+  "site_config": {
+    "title": "梁儀嫻 - 個人作品集",
+    "description": "自動化測試工程師的個人作品集網站",
+    "keywords": "自動化測試工程師 作品集",
+    "author": "梁儀嫻",
+    "language": "zh-TW"
+  },
+  "theme": {
+    "primary_gradient": {
+      "start": "#667eea",
+      "end": "#764ba2"
+    },
+    "secondary_gradient": {
+      "start": "#f093fb",
+      "middle": "#f5576c", 
+      "end": "#4facfe"
+    },
+    "background_gradient": {
+      "start": "#667eea",
+      "end": "#764ba2"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="site-title">個人作品集</title>
+    <meta name="description" id="site-description" content="個人作品集網站">
+    <meta name="keywords" id="site-keywords" content="作品集, 開發, 設計">
+    <meta name="author" id="site-author" content="">
+    
+    <!-- 引入外部樣式檔 -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- YAML Parser (只在需要支援 YAML 時載入) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+</head>
+<body>
+    <div class="loading" id="loading">載入中...</div>
+    
+    <div class="container" id="main-container">
+        <!-- 左側個人資料區 -->
+        <div class="profile-section">
+            <div class="profile-image" id="profile-avatar">
+                👨‍💻
+            </div>
+            <h1 class="profile-name" id="profile-name">載入中...</h1>
+            <p class="profile-title" id="profile-title">載入中...</p>
+            
+            <div class="profile-info" id="profile-info">
+                <!-- 將由 JavaScript 動態生成 -->
+            </div>
+
+            <div class="social-links" id="social-links">
+                <!-- 將由 JavaScript 動態生成 -->
+            </div>
+
+            <div class="skills" id="skills-section">
+                <h3>技能專長</h3>
+                <!-- 將由 JavaScript 動態生成 -->
+            </div>
+
+            <div class="contact-buttons">
+                <a href="#" class="contact-btn primary" id="contact-email">聯絡我</a>
+                <a href="#" class="contact-btn secondary">下載履歷</a>
+            </div>
+        </div>
+
+        <!-- 右側作品集區 -->
+        <div class="portfolio-section">
+            <h2 class="section-title">我的作品集</h2>
+            
+            <div class="portfolio-filter" id="portfolio-filter">
+                <!-- 將由 JavaScript 動態生成 -->
+            </div>
+            
+            <div class="carousel-container" id="carousel-container">
+                <!-- 將由 JavaScript 動態生成 -->
+            </div>
+
+            <div class="project-details" id="project-details">
+                <!-- 將由 JavaScript 動態生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入外部 JavaScript 檔案 -->
+    <script src="script.js"></script>
+</body>
+</html>

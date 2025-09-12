@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品集設定編輯器</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .skills-input {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .skills-input h4 {
+            margin: 0 0 10px 0;
+            color: #495057;
+        }
+        
+        .project-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .project-item h4 {
+            margin: 0 0 15px 0;
+            color: #495057;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .output pre {
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-size: 12px;
+            background: #333;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 作品集設定編輯器</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">填寫以下資訊，然後複製產生的程式碼到你的 script.js 檔案中</p>
+        
+        <form id="configForm">
+            <!-- 個人資訊 -->
+            <h3>👤 個人資訊</h3>
+            <div class="grid">
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" value="張小明" required>
+                </div>
+                <div class="form-group">
+                    <label for="title">職稱</label>
+                    <input type="text" id="title" value="全端開發工程師 & UI/UX 設計師" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">電子信箱</label>
+                    <input type="email" id="email" value="ming.chang@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">地點</label>
+                    <input type="text" id="location" value="台北，台灣">
+                </div>
+                <div class="form-group">
+                    <label for="experience">工作經驗</label>
+                    <input type="text" id="experience" value="5年+ 工作經驗">
+                </div>
+                <div class="form-group">
+                    <label for="phone">電話</label>
+                    <input type="text" id="phone" value="+886 912-345-678">
+                </div>
+            </div>
+            
+            <!-- 社群連結 -->
+            <h3>🔗 社群連結</h3>
+            <div class="grid">
+                <div class="form-group">
+                    <label for="github">GitHub</label>
+                    <input type="url" id="github" value="https://github.com/your-username">
+                </div>
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn</label>
+                    <input type="url" id="linkedin" value="https://linkedin.com/in/your-profile">
+                </div>
+                <div class="form-group">
+                    <label for="behance">Behance</label>
+                    <input type="url" id="behance" value="https://behance.net/your-profile">
+                </div>
+                <div class="form-group">
+                    <label for="dribbble">Dribbble</label>
+                    <input type="url" id="dribbble" value="https://dribbble.com/your-username">
+                </div>
+            </div>
+            
+            <!-- 技能 -->
+            <h3>💼 技能專長</h3>
+            <div class="skills-input">
+                <h4>前端開發</h4>
+                <input type="text" id="frontend" value="JavaScript,TypeScript,React,Vue.js,HTML5,CSS3,SASS" placeholder="用逗號分隔技能">
+            </div>
+            <div class="skills-input">
+                <h4>後端開發</h4>
+                <input type="text" id="backend" value="Node.js,Python,Express,FastAPI,MongoDB,PostgreSQL" placeholder="用逗號分隔技能">
+            </div>
+            <div class="skills-input">
+                <h4>設計工具</h4>
+                <input type="text" id="design" value="UI/UX,Figma,Sketch,Adobe XD" placeholder="用逗號分隔技能">
+            </div>
+            <div class="skills-input">
+                <h4>開發工具</h4>
+                <input type="text" id="tools" value="AWS,Docker,Git,Webpack" placeholder="用逗號分隔技能">
+            </div>
+            
+            <!-- 作品集 -->
+            <h3>🎯 作品集</h3>
+            <div id="projects">
+                <div class="project-item">
+                    <h4>作品 1</h4>
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>作品標題</label>
+                            <input type="text" class="project-title" value="電商網站平台">
+                        </div>
+                        <div class="form-group">
+                            <label>分類</label>
+                            <input type="text" class="project-category" value="Full-Stack Development">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>簡短描述</label>
+                        <textarea class="project-description">使用 React 和 Node.js 建構的現代化電商平台，包含購物車、金流整合和後台管理系統</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>詳細描述</label>
+                        <textarea class="project-detailed">這個專案展示了我在全端開發方面的能力，從前端的響應式設計到後端的API開發，以及資料庫設計和雲端部署。特別注重用戶體驗和效能優化。</textarea>
+                    </div>
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>技術標籤</label>
+                            <input type="text" class="project-tech" value="React,Node.js,MongoDB,AWS,Stripe" placeholder="用逗號分隔">
+                        </div>
+                        <div class="form-group">
+                            <label>完成日期</label>
+                            <input type="text" class="project-date" value="2024-01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" class="btn btn-secondary" onclick="addProject()">+ 新增作品</button>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="button" class="btn" onclick="generateConfig()">🚀 產生設定檔</button>
+                <button type="button" class="btn btn-secondary" onclick="copyToClipboard()">📋 複製到剪貼板</button>
+            </div>
+        </form>
+        
+        <div class="output" id="output" style="display: none;">
+            <h3>產生的設定檔</h3>
+            <p>請複製以下程式碼，並替換你的 script.js 檔案中的 defaultConfig 物件：</p>
+            <pre id="configOutput"></pre>
+        </div>
+    </div>
+    
+    <script>
+        function addProject() {
+            const projectsContainer = document.getElementById('projects');
+            const projectCount = projectsContainer.children.length + 1;
+            
+            const projectDiv = document.createElement('div');
+            projectDiv.className = 'project-item';
+            projectDiv.innerHTML = `
+                <h4>作品 ${projectCount} <button type="button" onclick="removeProject(this)" style="float: right; background: #dc3545; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">刪除</button></h4>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>作品標題</label>
+                        <input type="text" class="project-title" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>分類</label>
+                        <input type="text" class="project-category" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>簡短描述</label>
+                    <textarea class="project-description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>詳細描述</label>
+                    <textarea class="project-detailed"></textarea>
+                </div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>技術標籤</label>
+                        <input type="text" class="project-tech" value="" placeholder="用逗號分隔">
+                    </div>
+                    <div class="form-group">
+                        <label>完成日期</label>
+                        <input type="text" class="project-date" value="">
+                    </div>
+                </div>
+            `;
+            projectsContainer.appendChild(projectDiv);
+        }
+        
+        function removeProject(button) {
+            button.closest('.project-item').remove();
+        }
+        
+        function generateConfig() {
+            const config = {
+                personal_info: {
+                    name: document.getElementById('name').value,
+                    title: document.getElementById('title').value,
+                    avatar: "👨‍💻",
+                    location: document.getElementById('location').value,
+                    experience: document.getElementById('experience').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value
+                },
+                social_links: {
+                    github: document.getElementById('github').value,
+                    linkedin: document.getElementById('linkedin').value,
+                    behance: document.getElementById('behance').value,
+                    dribbble: document.getElementById('dribbble').value
+                },
+                skills: {
+                    frontend: document.getElementById('frontend').value.split(',').map(s => s.trim()).filter(s => s),
+                    backend: document.getElementById('backend').value.split(',').map(s => s.trim()).filter(s => s),
+                    design: document.getElementById('design').value.split(',').map(s => s.trim()).filter(s => s),
+                    tools: document.getElementById('tools').value.split(',').map(s => s.trim()).filter(s => s)
+                },
+                portfolio: [],
+                site_config: {
+                    title: `${document.getElementById('name').value} - 個人作品集`,
+                    description: `${document.getElementById('title').value}的個人作品集網站`,
+                    keywords: "作品集, 開發, 設計",
+                    author: document.getElementById('name').value,
+                    language: "zh-TW"
+                }
+            };
+            
+            // 處理作品集
+            const projects = document.querySelectorAll('.project-item');
+            projects.forEach((project, index) => {
+                const title = project.querySelector('.project-title').value;
+                if (title) {
+                    config.portfolio.push({
+                        id: index + 1,
+                        title: title,
+                        description: project.querySelector('.project-description').value,
+                        detailed_description: project.querySelector('.project-detailed').value,
+                        technologies: project.querySelector('.project-tech').value.split(',').map(s => s.trim()).filter(s => s),
+                        category: project.querySelector('.project-category').value,
+                        date: project.querySelector('.project-date').value
+                    });
+                }
+            });
+            
+            const configString = `const defaultConfig = ${JSON.stringify(config, null, 4)};`;
+            document.getElementById('configOutput').textContent = configString;
+            document.getElementById('output').style.display = 'block';
+            document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        async function copyToClipboard() {
+            const configText = document.getElementById('configOutput').textContent;
+            try {
+                await navigator.clipboard.writeText(configText);
+                alert('設定檔已複製到剪貼板！');
+            } catch (err) {
+                // 備用方法
+                const textArea = document.createElement('textarea');
+                textArea.value = configText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('設定檔已複製到剪貼板！');
+            }
+        }
+    </script>
+</body>
+</html>
