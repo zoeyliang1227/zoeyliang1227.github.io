@@ -1,0 +1,66 @@
+{
+  "portfolio": [
+    {
+      "id": 3,
+      "title": "DeskClick",
+      "description": "Use ctypes to auto-click on the desktop (Ex.Artale)",
+      "detailed_description": "使用 ctypes 自動點擊桌面（例如 Artale）",
+      "media": "./images/project3.mp4",
+      "demo_url": "https://demo-ecommerce.com",
+      "github_url": "https://github.com/zoeyliang1227/DeskClick",
+      "technologies": [
+        "ctypes",
+        "threading"
+      ],
+      "category": "Automation Scripts",
+      "date": "2025-09"
+    },
+    {
+      "id": 1,
+      "title": "InstaScraper",
+      "description": "Build a bot to fetch data from Instagram automatically",
+      "detailed_description": "建立一個機器人來自動從 Instagram 獲取數據",
+      "media": "./images/project1.mp4",
+      "demo_url": "https://demo-ecommerce.com",
+      "github_url": "https://github.com/zoeyliang1227/InstaScraper",
+      "technologies": [
+        "Python",
+        "playwright"
+      ],
+      "category": "Automation Scripts",
+      "date": "2025-09"
+    },
+    {
+      "id": 2,
+      "title": "AutoPageGrabber",
+      "description": "Automate file lookup, web scraping, screenshots, and data handling",
+      "detailed_description": "自動執行文件查找、網頁抓取、螢幕截圖和資料處理",
+      "media": "./images/project2.mp4",
+      "demo_url": "https://demo-ecommerce.com",
+      "github_url": "https://github.com/zoeyliang1227/AutoPageGrabber",
+      "technologies": [
+        "Python",
+        "playwright",
+        "beautifulsoup4",
+        "Robot Framework",
+        "Pabot"
+      ],
+      "category": "Automation Scripts",
+      "date": "2025-08"
+    },
+    {
+      "id": 4,
+      "title": "UIBuilder",
+      "description": "Build a desktop app with modern UI using ttkbootstrap (Case : CDRouter)",
+      "detailed_description": "使用 ttkbootstrap 建立具有現代 UI 的桌面應用程式（案例：CDRouter）",
+      "media": "./images/project4.mp4",
+      "demo_url": "https://demo-ecommerce.com",
+      "github_url": "",
+      "technologies": [
+        "ttkbootstrap "
+      ],
+      "category": "Automation Scripts",
+      "date": "2024-07"
+    }
+  ]
+}

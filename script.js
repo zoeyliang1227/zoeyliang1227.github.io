@@ -10,17 +10,51 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // 載入並解析 json 設定檔
+// async function loadConfig() {
+//   try {
+//     const response = await fetch('config.json'); // 保持 JSON
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+//     config = await response.json();                // 解析 JSON
+//     initializeWebsite();
+//   } catch (error) {
+//     console.error('載入設定檔失敗:', error);
+//     showError('無法載入設定檔，請確認 config.json 存在且格式正確');
+//   }
+// }
 async function loadConfig() {
   try {
-    const response = await fetch('config.json'); // 保持 JSON
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    // 同時載入三個配置檔
+    const [configResponse, manifestResponse, portfolioResponse] = await Promise.all([
+      fetch('config/config.json'),
+      fetch('config/manifest.json'),
+      fetch('config/portfolio.json')
+    ]);
+
+    // 檢查所有回應狀態
+    if (!configResponse.ok || !manifestResponse.ok || !portfolioResponse.ok) {
+      throw new Error('部分配置檔載入失敗');
     }
-    config = await response.json();                // 解析 JSON
+
+    // 解析所有 JSON
+    const [configData, manifestData, portfolioData] = await Promise.all([
+      configResponse.json(),
+      manifestResponse.json(),
+      portfolioResponse.json()
+    ]);
+
+    // 合併配置物件
+    config = {
+      ...configData,
+      ...manifestData,
+      portfolio: Array.isArray(portfolioData) ? portfolioData : portfolioData.portfolio || []
+    };
+
     initializeWebsite();
   } catch (error) {
-    console.error('載入設定檔失敗:', error);
-    showError('無法載入設定檔，請確認 config.json 存在且格式正確');
+    console.error('無法載入設定檔，請確認所有配置檔存在且格式正確');
+    console.error('網站初始化失敗，請檢查設定檔格式');
   }
 }
 
@@ -28,6 +62,7 @@ async function loadConfig() {
 // 初始化網站內容
 function initializeWebsite() {
     try {
+        console.log("🚀 載入後的 config:", config); // 先看看結構
         // 設定網站標題和 meta 資訊
         if (config.site_config) {
             document.getElementById('site-title').innerHTML = config.site_config.title;
@@ -45,6 +80,9 @@ function initializeWebsite() {
         
         // 載入技能
         loadSkills();
+
+        // 載入連絡我
+        loadScontact();
         
         // 載入作品集
         filteredProjects = config.portfolio || [];
@@ -82,28 +120,10 @@ function loadPersonalInfo() {
     // 設定姓名和職稱
     document.getElementById('profile-name').innerHTML = info.name || '姓名載入中...';
     document.getElementById('profile-title').innerHTML  = (info.title || '職稱載入中...').replace(/\r\n|\r|\n/g, '<br>');
-    console.log(info.title.split('\n'));
-    
-    // 設定聯絡信箱
-    if (info.email) {
-        document.getElementById('contact-email').href = `mailto:${info.email}`;
-    }
     
     // 生成個人資訊
     const profileInfo = document.getElementById('profile-info');
     let infoHTML = '';
-    
-    if (info.email) {
-        infoHTML += `
-            <div class="info-item">
-                <svg class="info-icon" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                </svg>
-                <span>${info.email}</span>
-            </div>
-        `;
-    }
     
     if (info.location) {
         infoHTML += `
@@ -126,29 +146,7 @@ function loadPersonalInfo() {
             </div>
         `;
     }
-    
-    if (info.phone) {
-        infoHTML += `
-            <div class="info-item">
-                <svg class="info-icon" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-                </svg>
-                <span>${info.phone}</span>
-            </div>
-        `;
-    }
-    
-    if (info.website) {
-        infoHTML += `
-            <div class="info-item">
-                <svg class="info-icon" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.559-.499-.948-.737-1.182C10.232 4.032 10.076 4 10 4z" clip-rule="evenodd"></path>
-                </svg>
-                <span><a href="${info.website}" target="_blank" style="color: inherit;">${info.website}</a></span>
-            </div>
-        `;
-    }
-    
+
     profileInfo.innerHTML = infoHTML;
 }
 
@@ -162,20 +160,29 @@ function loadSocialLinks() {
     
     const socialMap = {
         github: 'github',
-        linkedin: 'linkedin',
+        linkedin: 'linkedin',   
+    };
+
+    const socialIcons = {
+        github: '<path d="M12 0C5.37 0 0 5.37 0 12a12 12 0 008.21 11.44c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.41-1.34-1.79-1.34-1.79-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.48-1.34-5.48-5.94 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.64-5.49 5.93.43.38.81 1.12.81 2.26v3.35c0 .32.22.7.82.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/>',
+        linkedin: '<path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zM8.5 8h3.82v2.56h.05c.53-1 1.83-2.06 3.77-2.06C21.36 8.5 24 11.24 24 16.06V24h-4v-7.4c0-1.76-.03-4.04-2.46-4.04-2.47 0-2.85 1.93-2.85 3.92V24h-4V8z"/>',
     };
     
     for (const [platform, url] of Object.entries(socialLinks)) {
         if (url) {
-            const displayText = socialMap[platform] || platform.charAt(0).toUpperCase();
+            const iconPath = socialIcons[platform] || '';
             socialHTML += `
-                <a href="${url}" target="_blank" class="social-link" title="${platform}">
-                    ${displayText}
+                <a href="${url}" target="_blank" title="${platform}" class="social-link">
+                    <div class="social-link">
+                        <svg class="social-link svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            ${iconPath}
+                        </svg>
+                    </div>    
                 </a>
+                    
             `;
         }
     }
-    
     socialContainer.innerHTML = socialHTML;
 }
 
@@ -213,6 +220,19 @@ function getCategoryDisplayName(category) {
         cloud: '雲端服務'
     };
     return categoryMap[category] || category;
+}
+
+// 載入聯絡我
+function loadScontact() {
+    const contact = config.contact;
+    if (!contact) return;
+    
+    const contactContainer = document.getElementById('contact-buttons');
+
+contactContainer.innerHTML = `
+    <a href="mailto:${contact.email}" class="contact-btn primary" id="contact-email">聯絡我</a>
+    <a href="${contact.resume}" class="contact-btn secondary">下載履歷</a>
+`;
 }
 
 // 載入作品集
@@ -278,24 +298,63 @@ function filterProjects(category) {
 
 // 載入輪播投影片
 function loadCarouselSlides() {
+    console.log('loadCarouselSlides() 被呼叫了！');
+    console.log('filteredProjects:', filteredProjects);
+    
     const carouselContainer = document.getElementById('carousel-container');
+    console.log('carouselContainer:', carouselContainer);
+
+    // 如果資料還沒準備好，延遲重試
+    if (!filteredProjects || filteredProjects.length === 0) {
+        console.log('資料尚未準備，0.5秒後重試...');
+        setTimeout(loadCarouselSlides, 500);
+        return;
+    }
     
     let slidesHTML = '';
     let navDotsHTML = '';
     
     filteredProjects.forEach((project, index) => {
-        const backgroundImage = project.image ? `background-image: url('${project.image}');` : '';
+        console.log(`處理專案 ${index}:`, project);
+        
+        // 同時支援 media 和 image 屬性
+        const mediaUrl = project.media || project.image;
+        console.log(`專案 ${index} 的媒體URL:`, mediaUrl);
+        
+        const mediaHTML = getMediaContent(mediaUrl);
+        // let mediaHTML = '';
+        // if (mediaUrl) {
+        //     const isVideo = mediaUrl.toLowerCase().includes('.mp4') || 
+        //                    mediaUrl.toLowerCase().includes('.webm') || 
+        //                    mediaUrl.toLowerCase().includes('.mov') ||
+        //                    mediaUrl.toLowerCase().includes('.avi');
+            
+        //     console.log(`專案 ${index} 的媒體:`, mediaUrl, '是影片:', isVideo);
+            
+        //     if (isVideo) {
+        //         mediaHTML = `
+        //             <video class="slide-video" autoplay muted loop playsinline 
+        //                    onloadstart="console.log('影片開始載入:', '${mediaUrl}')"
+        //                    oncanplay="console.log('影片可以播放:', '${mediaUrl}')"
+        //                    onerror="console.error('影片載入錯誤:', '${mediaUrl}'); this.outerHTML='<div class=&quot;slide-error&quot;>影片載入失敗: ${mediaUrl}</div>'">
+        //                 <source src="${mediaUrl}" type="video/mp4">
+        //                 您的瀏覽器不支援影片播放
+        //             </video>
+        //         `;
+        //     } else {
+        //         mediaHTML = `<div class="slide-image" style="background-image: url('${mediaUrl}');"></div>`;
+        //     }
+        // } else {
+        //     console.log(`專案 ${index} 沒有 media 或 image 屬性`);
+        //     mediaHTML = '<div class="slide-placeholder">無媒體內容</div>';
+        // }
         
         slidesHTML += `
-            <div class="carousel-slide ${index === 0 ? 'active' : ''}" style="${backgroundImage}">
+            <div class="carousel-slide ${index === 0 ? 'active' : ''}">
+                ${mediaHTML}
                 <div class="slide-overlay">
                     <div class="slide-content">
-                        <h3>${project.title}</h3>
-                        <p>${project.description}</p>
-                        <div class="slide-links">
-                            ${project.demo_url ? `<a href="${project.demo_url}" target="_blank" class="slide-link">查看 Demo</a>` : ''}
-                            ${project.github_url ? `<a href="${project.github_url}" target="_blank" class="slide-link">GitHub</a>` : ''}
-                        </div>
+                        <h3 class="project-title">${project.title}</h3>
                     </div>
                 </div>
             </div>
@@ -306,6 +365,7 @@ function loadCarouselSlides() {
         `;
     });
     
+    console.log('準備更新 carouselContainer.innerHTML');
     carouselContainer.innerHTML = `
         ${slidesHTML}
         <button class="carousel-arrow prev" onclick="changeSlide(-1)">‹</button>
@@ -314,6 +374,55 @@ function loadCarouselSlides() {
             ${navDotsHTML}
         </div>
     `;
+    console.log('carouselContainer.innerHTML 更新完成');
+}
+
+function getMediaContent(mediaUrl) {
+    if (!mediaUrl) {
+        return '<div class="slide-placeholder">無媒體內容</div>';
+    }
+    
+    // 除錯：顯示媒體 URL
+    console.log('Media URL:', mediaUrl);
+    
+    // 獲取文件擴展名
+    const extension = mediaUrl.split('.').pop().toLowerCase();
+    console.log('Extension:', extension);
+    
+    // 判斷是否為影片格式
+    const videoExtensions = ['mp4', 'webm', 'ogg', 'avi', 'mov', 'wmv', 'flv', 'm4v'];
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
+    
+    if (videoExtensions.includes(extension)) {
+        // 影片格式
+        let videoType = extension;
+        if (extension === 'mov') videoType = 'quicktime';
+        if (extension === 'm4v') videoType = 'mp4';
+        
+        console.log('Creating video element for:', mediaUrl);
+        
+        return `
+            <video class="slide-video" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;" 
+                   onerror="console.error('Video load error:', this.src); this.outerHTML='<div class=&quot;slide-placeholder&quot;>影片載入失敗: ${mediaUrl}</div>'">
+                <source src="${mediaUrl}" type="video/${videoType}">
+                您的瀏覽器不支援影片播放
+            </video>
+        `;
+    } else if (imageExtensions.includes(extension)) {
+        // 圖片格式
+        console.log('Creating image element for:', mediaUrl);
+        return `
+            <div class="slide-image" style="width: 100%; height: 100%; background-image: url('${mediaUrl}'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+        `;
+    } else {
+        // 未知格式，嘗試作為圖片處理，如果失敗則顯示錯誤
+        console.log('Unknown format, trying as image:', mediaUrl);
+        return `
+            <img class="slide-unknown" src="${mediaUrl}" alt="專案媒體" 
+                 style="width: 100%; height: 100%; object-fit: cover;"
+                 onerror="this.outerHTML='<div class=&quot;slide-placeholder&quot;>無法載入媒體格式: .${extension}</div>'">
+        `;
+    }
 }
 
 // 初始化輪播功能
@@ -410,7 +519,11 @@ function updateProjectDetails(index) {
     }
     
     detailsContainer.innerHTML = `
-        <h4>${project.title}</h4>
+        <div class="project-header">
+            <h4>${project.title}
+            ${project.github_url ? `<a href="${project.github_url}" target="_blank" class="slide-link">GitHub</a>` : ''}
+            </h4>
+        </div>
         ${metaHTML ? `<div class="project-meta">${metaHTML}</div>` : ''}
         <p>${project.detailed_description || project.description}</p>
         ${techHTML ? `<div class="project-tech">${techHTML}</div>` : ''}

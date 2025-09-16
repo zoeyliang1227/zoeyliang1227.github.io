@@ -6,7 +6,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Constantia, Georgia, 'Times New Roman', serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     overflow-x: hidden;
@@ -18,7 +18,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-size: 1.2em;
+    font-size: 1.5em;
     color: white;
 }
 
@@ -60,7 +60,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 60px;
+    /* font-size: 100px; */
     color: white;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
@@ -88,35 +88,44 @@ body {
 
 .profile-title {
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.5em;
     color: #666;
     margin-bottom: 30px;
     font-weight: 300;
-    /*white-space: pre-line; /* 這行讓 \n 換行生效 */
 }
 
 .profile-info {
-    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 兩欄平均分配 */
+    gap: 20px;                             /* 欄間距 */
 }
 
 .info-item {
     display: flex;
-    align-items: center;
+    align-items: center;       /* 改成垂直置中，看起來更整齊 */
     margin-bottom: 15px;
     padding: 10px;
     border-radius: 10px;
     transition: background-color 0.3s ease;
+    font-size: 16px;           /* 設定文字大小 */
 }
 
 .info-item:hover {
     background-color: rgba(102, 126, 234, 0.1);
+    fill: #333; 
+}
+
+.info-item span {
+    font-size: 18px;           /* 或更大，例如 18px */
+    line-height: 1.4;          /* 讓文字跟圖示垂直對齊 */
 }
 
 .info-icon {
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     margin-right: 15px;
     color: #667eea;
+    transition: fill 1s;
 }
 
 /* 技能區塊 */
@@ -153,7 +162,7 @@ body {
     color: white;
     padding: 6px 12px;
     border-radius: 15px;
-    font-size: 0.8em;
+    font-size: 1em;
     font-weight: 500;
     transition: transform 0.3s ease;
 }
@@ -164,24 +173,28 @@ body {
 
 /* 社群連結 */
 .social-links {
-    display: flex;
-    gap: 15px;
-    margin: 20px 0;
-    justify-content: center;
+  display: flex;
+  justify-content: center; /* 整排水平置中 */
+  align-items: center;     /* 如果要垂直置中 */
+  gap: 30px;               /* icon 間距 */
 }
 
 .social-link {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-decoration: none;
-    transition: transform 0.3s ease;
-    font-weight: bold;
+  width: 48px;
+  height: 48px;
+  /* background: linear-gradient(45deg, #667eea, #764ba2); */
+  display: flex;
+  align-items: center;     /* 垂直置中 */
+  justify-content: center; /* 水平置中 */
+  border-radius: 15px;
+}
+
+.social-link svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: currentColor;      /* 用 color 控制顏色 */
+  color: white;
 }
 
 .social-link:hover {
@@ -280,41 +293,170 @@ body {
 }
 
 .carousel-slide {
+    position: absolute; /* 保持absolute定位 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* 改回100% */
+    opacity: 0;
+    visibility: hidden; /* 新增：完全隱藏非active的投影片 */
+    transition: opacity 0.8s ease-in-out, visibility 0s linear 0.8s; /* 延迟visibility變化 */
+    overflow: hidden;
+    z-index: 1; /* 設定基礎z-index */
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    visibility: visible; /* 顯示active投影片 */
+    transition: opacity 0.8s ease-in-out; /* active時立即顯示 */
+    z-index: 2; /* active投影片在最上層 */
+}
+
+.carousel-slide::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     background: linear-gradient(45deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
-    color: white;
-    text-align: center;
-    background-size: cover;
-    background-position: center;
+    z-index: 0;
 }
 
-.carousel-slide.active {
-    opacity: 1;
+/* 確保影片和圖片在背景之上 */
+.slide-video,
+.slide-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    display: block;
+}
+
+.slide-video {
+    /* 確保影片正確顯示 */
+    background: black; /* 載入時的背景色 */
+}
+
+.slide-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .slide-overlay {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 2;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+}
+
+.slide-content h3 {
+    color: white;
+    font-size: 2rem;
     text-align: center;
-    padding: 40px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 0;
+}
+
+/* 導航按鈕樣式 */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 3;
+    transition: all 0.3s ease;
+}
+
+.carousel-arrow:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-arrow.prev {
+    left: 20px;
+}
+
+.carousel-arrow.next {
+    right: 20px;
+}
+
+/* 導航點樣式 */
+.carousel-nav {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 3;
+}
+
+.nav-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-dot.active,
+.nav-dot:hover {
+    background: white;
+    transform: scale(1.2);
+}
+
+/* 錯誤處理樣式 */
+.slide-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #f8f8f8;
+    color: #666;
+    font-size: 16px;
+}
+
+.slide-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+    color: #888;
+    font-size: 18px;
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 左右兩邊對齊 */
+  flex-wrap: nowrap; /* 不換行 */
+  width: 100%; /* 拉滿寬度 */
+  gap: 10px; /* 標題和按鈕間隔 */
+}
+
+.project-header h4 {
+  margin: 0; /* 清掉預設 margin */
 }
 
 .slide-content h3 {
@@ -324,7 +466,7 @@ body {
 }
 
 .slide-content p {
-    font-size: 1.2em;
+    font-size: 1.5em;
     max-width: 600px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     margin-bottom: 20px;
@@ -332,22 +474,32 @@ body {
 
 .slide-links {
     display: flex;
-    gap: 15px;
+    gap: 10px;
 }
 
 .slide-link {
-    padding: 10px 20px;
+    padding: 2px 6px; /* 上下2px 左右6px */
+    font-size: 12px;  /* 文字變小 */
     background: rgba(255, 255, 255, 0.2);
     color: white;
     text-decoration: none;
-    border-radius: 25px;
-    border: 2px solid white;
+    border: 1px solid white;  /* 邊框變細 */
+    border-radius: 6px;       /* 圓角小一點 */
     transition: all 0.3s ease;
 }
 
 .slide-link:hover {
     background: white;
     color: #667eea;
+}
+
+.slide-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    z-index: 1;
 }
 
 /* 輪播導航 */
@@ -442,14 +594,13 @@ body {
     font-size: 0.8em;
 }
 
-/* 錯誤訊息 */
-.error-message {
-    color: #ff6b6b;
-    text-align: center;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    margin: 20px;
+.slide-error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+    z-index: 1;
 }
 
 /* 響應式設計 */
