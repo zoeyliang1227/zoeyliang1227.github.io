@@ -194,7 +194,7 @@ body {
   height: 100%;
   display: block;
   fill: currentColor;      /* 用 color 控制顏色 */
-  color: white;
+  color: #764ba2;
 }
 
 .social-link:hover {
@@ -483,7 +483,7 @@ body {
     background: rgba(255, 255, 255, 0.2);
     color: white;
     text-decoration: none;
-    border: 1px solid white;  /* 邊框變細 */
+    border: 1px solid #764ba2;  /* 邊框變細 */
     border-radius: 6px;       /* 圓角小一點 */
     transition: all 0.3s ease;
 }

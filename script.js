@@ -213,11 +213,11 @@ function loadSkills() {
 // 取得技能分類顯示名稱
 function getCategoryDisplayName(category) {
     const categoryMap = {
-        backend: '後端開發', 
-        tools: '開發工具',
-        mobile: '行動開發',
-        database: '資料庫',
-        cloud: '雲端服務'
+        programming: '程式語言 / 自動化開發語言', 
+        tools: '自動化測試工具',
+        management: '測試管理 / 規劃工具',
+        control: '版本控制 / CI',
+        types: '測試類型'
     };
     return categoryMap[category] || category;
 }
@@ -322,32 +322,6 @@ function loadCarouselSlides() {
         console.log(`專案 ${index} 的媒體URL:`, mediaUrl);
         
         const mediaHTML = getMediaContent(mediaUrl);
-        // let mediaHTML = '';
-        // if (mediaUrl) {
-        //     const isVideo = mediaUrl.toLowerCase().includes('.mp4') || 
-        //                    mediaUrl.toLowerCase().includes('.webm') || 
-        //                    mediaUrl.toLowerCase().includes('.mov') ||
-        //                    mediaUrl.toLowerCase().includes('.avi');
-            
-        //     console.log(`專案 ${index} 的媒體:`, mediaUrl, '是影片:', isVideo);
-            
-        //     if (isVideo) {
-        //         mediaHTML = `
-        //             <video class="slide-video" autoplay muted loop playsinline 
-        //                    onloadstart="console.log('影片開始載入:', '${mediaUrl}')"
-        //                    oncanplay="console.log('影片可以播放:', '${mediaUrl}')"
-        //                    onerror="console.error('影片載入錯誤:', '${mediaUrl}'); this.outerHTML='<div class=&quot;slide-error&quot;>影片載入失敗: ${mediaUrl}</div>'">
-        //                 <source src="${mediaUrl}" type="video/mp4">
-        //                 您的瀏覽器不支援影片播放
-        //             </video>
-        //         `;
-        //     } else {
-        //         mediaHTML = `<div class="slide-image" style="background-image: url('${mediaUrl}');"></div>`;
-        //     }
-        // } else {
-        //     console.log(`專案 ${index} 沒有 media 或 image 屬性`);
-        //     mediaHTML = '<div class="slide-placeholder">無媒體內容</div>';
-        // }
         
         slidesHTML += `
             <div class="carousel-slide ${index === 0 ? 'active' : ''}">

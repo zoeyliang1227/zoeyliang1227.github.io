@@ -11,16 +11,33 @@
     "linkedin": "https://www.linkedin.com/in/zoey-liang-5a2226172/"
   },
   "skills": {
-    "backend": [
-      "Python"
-    ],
-    "design": [
+    "programming": [
+      "Python",
+      "GUI 工具設計（tkinter）",
+      "Excel 資料處理"
     ],
     "tools": [
-      "Git",
       "Selenium",
-      "Playwright",
-      "Robot Framework"
+      "Robot Framework",
+      "Pabot",
+      "log parser"
+    ],
+    "management": [
+      "Testlink",
+      "Jira",
+      "Todo"
+    ],
+    "control": [
+      "Git",
+      "GitHub",
+      "Jenkins"
+    ],
+    "types": [
+      "自動化測試",
+      "手動測試",
+      "GUI 測試",
+      "資料驗證",
+      "功能測試"
     ]
   },
   "contact": {
