@@ -10,19 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // 載入並解析 json 設定檔
-// async function loadConfig() {
-//   try {
-//     const response = await fetch('config.json'); // 保持 JSON
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! status: ${response.status}`);
-//     }
-//     config = await response.json();                // 解析 JSON
-//     initializeWebsite();
-//   } catch (error) {
-//     console.error('載入設定檔失敗:', error);
-//     showError('無法載入設定檔，請確認 config.json 存在且格式正確');
-//   }
-// }
 async function loadConfig() {
   try {
     // 同時載入三個配置檔
