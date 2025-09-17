@@ -485,7 +485,7 @@ body {
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
     text-decoration: none;
-    border: 1px solid #764ba2;  /* 邊框變細 */
+    /* border: 1px solid #764ba2;  /* 邊框變細 */
     border-radius: 6px;       /* 圓角小一點 */
     transition: all 0.3s ease;
 }
