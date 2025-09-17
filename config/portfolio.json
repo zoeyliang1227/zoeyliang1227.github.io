@@ -13,7 +13,7 @@
         "threading"
       ],
       "category": "Automation Scripts",
-      "date": "2025-09"
+      "date": "2025-07"
     },
     {
       "id": 1,
@@ -46,7 +46,7 @@
         "Pabot"
       ],
       "category": "Automation Scripts",
-      "date": "2025-08"
+      "date": "2025-07"
     },
     {
       "id": 4,
@@ -57,10 +57,40 @@
       "demo_url": "https://demo-ecommerce.com",
       "github_url": "",
       "technologies": [
-        "ttkbootstrap "
+        "ttkbootstrap"
       ],
       "category": "UI/UX Tools",
       "date": "2024-07"
+    },
+    {
+      "id": 5,
+      "title": "GiftScraper",
+      "description": "Scrape gift items and prices from LINE Gift Shop",
+      "detailed_description": "從 LINE 禮品店抓取禮品商品和價格",
+      "media": "./images/project5.mp4",
+      "demo_url": "https://demo-ecommerce.com",
+      "github_url": "https://github.com/zoeyliang1227/GiftScraper",
+      "technologies": [
+        "slelenium",
+        "beautifulsoup4"
+      ],
+      "category": "Automation Scripts",
+      "date": "2022-08"
+    },
+    {
+      "id": 5,
+      "title": "StockSage",
+      "description": "Fetch real-time and historical stock prices",
+      "detailed_description": "取得即時和歷史股票價格",
+      "media": "./images/project5.mp4",
+      "demo_url": "https://demo-ecommerce.com",
+      "github_url": "https://github.com/zoeyliang1227/StockSage",
+      "technologies": [
+        "slelenium",
+        "pandas"
+      ],
+      "category": "Web Scraping",
+      "date": "2023-06"
     }
   ]
 }
