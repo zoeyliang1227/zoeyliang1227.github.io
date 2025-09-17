@@ -78,11 +78,11 @@
       "date": "2022-08"
     },
     {
-      "id": 5,
+      "id": 6,
       "title": "StockSage",
       "description": "Fetch real-time and historical stock prices",
       "detailed_description": "取得即時和歷史股票價格",
-      "media": "./images/project5.mp4",
+      "media": "./images/project6.mp4",
       "demo_url": "https://demo-ecommerce.com",
       "github_url": "https://github.com/zoeyliang1227/StockSage",
       "technologies": [
